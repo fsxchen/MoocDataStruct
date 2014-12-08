@@ -1,19 +1,12 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_INT = 0x7fffffff;
 const int MIN_INT = 0x80000000;
 
-int max(int a, int b, int c) {
+inline int max(int a, int b, int c) {
     if (a >= b && a >= c) return a;
     else if(b >= a && b >= c) return b;
     else return c;
-}
-
-void showArray(int* arr, int len, const char ch='\n') {
-    for (int i = 0; i < len; ++i)
-        cout << arr[i] << ch;
-    if (ch != '\n') cout << endl;
 }
 
 void findCrossSubArray(int *arr, int low, int mid, int high, int returnArr[]) {
@@ -21,7 +14,7 @@ void findCrossSubArray(int *arr, int low, int mid, int high, int returnArr[]) {
     int lsum = 0;
     int max_left, max_right;
     int i, j;
-    for (i = mid ; i >= 0; i--) {
+    for (i = mid; i >= 0; i--) {
         lsum = lsum + arr[i];
         if (lsum > leftSum){
             leftSum = lsum;
@@ -33,7 +26,6 @@ void findCrossSubArray(int *arr, int low, int mid, int high, int returnArr[]) {
     int rsum = 0;
     for (j = mid + 1; j <= high; ++j) {
         rsum = rsum + arr[j];
-        cout <<"aa" <<rsum << "bb" << endl;
         if (rsum > rightSum){
             rightSum = rsum;
             max_right = j;
@@ -43,7 +35,6 @@ void findCrossSubArray(int *arr, int low, int mid, int high, int returnArr[]) {
 }
 
 void findMaxSubArray(int *arr, int low, int high, int resultArr[]) {
-    cout << "low is "<< low << "and high is" << high << endl;
     if(low == high) {
         resultArr[0] = low;
         resultArr[1] = high;
@@ -52,11 +43,9 @@ void findMaxSubArray(int *arr, int low, int high, int resultArr[]) {
     } else {
         int lResArr[3], rResArr[3], cResArr[3];
         int mid = (high + low) / 2;
-        cout << "mid is" << mid << endl;
         findCrossSubArray(arr, low, mid, high, cResArr);
         findMaxSubArray(arr, low, mid, lResArr);
         findMaxSubArray(arr, mid + 1, high, rResArr);
-        cout << cResArr[0] <<"--" << cResArr[1] << "--" << cResArr[2] << endl;
         if ((max(lResArr[2], rResArr[2], cResArr[2])) == lResArr[2]){
             resultArr[0] = lResArr[0];
             resultArr[1] = lResArr[1];
@@ -77,21 +66,17 @@ void findMaxSubArray(int *arr, int low, int high, int resultArr[]) {
 }
 
 int main () {
-    cout << "The max is" << MAX_INT << "and the min is" << MIN_INT << endl;
-    int k;
-    cout << "请输入一个正整数k:";
-    cin >> k;
-    int *arr = new int[k];
-    for(int i = 0; i < k; i++) {
+    int K;
+    cin >> K;
+    int *arr = new int[K];
+    for(int i = 0; i < K; i++) {
         cin >> arr[i];
     }
-    showArray(arr, k);
     int res[3];
     int resultArr[3] = {};
-    findMaxSubArray(arr,0, k - 1, resultArr);
-    // findCrossSubArray(arr,0,k/2,k, res);
-    cout << "the resule is:" << endl;
-    showArray(resultArr, 3, '\t');
+    findMaxSubArray(arr,0, K - 1, resultArr);
+    cout << resultArr[2] << ' '<< arr[resultArr[0]] << ' ' << arr[resultArr[1]] << endl;
+
     delete[] arr;
     return 0;
 }
