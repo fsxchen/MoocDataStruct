@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ios>
+#include <iomanip>
 
 using namespace std;
 
@@ -37,7 +38,7 @@ public:
             return;
         else{
             int curindex = find(startPtr);
-            cout << head[curindex].add << ' ' << head[curindex].data <<' '<< head[curindex].next <<endl;
+            cout << setfill('0') << setw(6) << head[curindex].add << ' ' << head[curindex].data <<' ' << setw(6)<< head[curindex].next <<endl;
             int nextPtr = head[curindex].next;
 
             listShow(nextPtr);
