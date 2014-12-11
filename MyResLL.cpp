@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cstdio>
 
 using namespace std;
 
@@ -50,9 +51,16 @@ public:
         int num = length / K;
         for (int i = 0; i < num; i++) {
             for (int j = 0; j < K/2; j ++) {
-                swap(head[j + (i*K)].data, head[K -1 - j + (i*K)].data);
+                swap(head[j + (i*K)], head[K -1 - j + (i*K)]);
             }
         }
+        for (int i = 0; i < length; ++ i) {
+            if (i != length - 1){
+                head[i].next = head[i + 1].add;
+            }
+            else
+                head[i].next = -1;
+            }
     }
 
     void show(){
